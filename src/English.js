@@ -1,28 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, Button, TextInput, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, Button, TextInput, StyleSheet, FlatList } from 'react-native';
 
 export const EnglishScreen = () => {
+
+    const [answerList, setAnswerList] = useState([]);
 
     const [text, setText] = useState('');
 
     const [word, onChangeWord] = useState('');
 
-    const url = 'https://script.google.com/macros/s/AKfycbwxEVsaRz81dSRDtMJyIR0TKjDW6Wsqb5KwNxArlc6P0grghgbLDDMgr9sxWd1wXPEk/exec';
+    const url = 'https://script.google.com/macros/s/AKfycbzZgYWR32JsBCn8H3UoRE_mHbqemR7ZQli_V1tzTsH_g-fDWb0hNBu5-Cs7h77RmkXG/exec';
 
     const fetchAnswer = async () => {
         const submitUrl = url + '?word=' + word;
         return fetch(submitUrl)
-        .then(res => res.text());
+        .then(res => res.json());
     }
 
     const onPressFetch = () => {
-        (async() => {setText(await fetchAnswer())})();
+        (async() => {setAnswerList(await fetchAnswer())})();
     }
 
 
     return (
         <View style={styles.wrapper}>
-            <Text>{text}</Text>
+            <FlatList
+                data={answerList}
+                renderItem={({item}) => {
+                    return <Text>{item.word}</Text>
+                }}
+                keyExtractor={answerList => `${answerList.key}`}
+            />
             <TextInput onChangeText={onChangeWord} value={word} style={styles.input} />
             <Button title="検索" onPress={onPressFetch} />
         </View>

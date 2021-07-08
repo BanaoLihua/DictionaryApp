@@ -10,21 +10,6 @@ import { ChineseScreen } from './src/Chinese';
 
 export default function App() {
 
-  const [ text, setText ] = useState('');
-
-  const onPressTest = async () => {
-    return fetch('https://script.google.com/macros/s/AKfycbwxEVsaRz81dSRDtMJyIR0TKjDW6Wsqb5KwNxArlc6P0grghgbLDDMgr9sxWd1wXPEk/exec?word=allow')
-    .then(res => res.text());
-  }
-
-  const onPressTest2 = () => {
-    (async() => {setText(await onPressTest())})();
-  }
-
-  const onPressTest3 = () => {
-    console.log(text)
-  }
-
   const Tab = createBottomTabNavigator();
 
   return (
