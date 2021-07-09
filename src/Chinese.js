@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, TouchableOpacity, TextInput, StyleSheet, FlatList, StatusBar } from 'react-native';
-import { Input, Button } from 'react-native-elements';
+import { Input, Button, Header, ThemeProvider } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const ChineseScreen = () => {
+
+    const theme = {
+        colors: {
+            primary: 'orangered'
+        }
+    }
 
     const [answerList, setAnswerList] = useState([]);
 
@@ -23,36 +29,40 @@ export const ChineseScreen = () => {
 
     const renderItem = ({item}) => {
         return(
-            <View style={styles.flatlist}>
+            <View style={styles.flatlistContent}>
                 <Text>{item.word}</Text>
             </View>
         )
     }
 
     return (
-        <View style={styles.wrapper}>
-            <StatusBar barStyle="light-content" />
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Input onChangeText={onChangeWord} 
-                    value={word} 
-                    placeholder='请输入单词'
-                    leftIcon={{
-                            type: 'font-awesome', 
-                            name: 'search', 
-                            color: 'lightgray', 
-                            size: 20
-                            }} 
+        <View>
+            <ThemeProvider theme={theme}>
+                <Header 
+                    centerComponent={{text: 'Weblio中国語辞書', style: {color: 'white', fontSize: 20}}}
                 />
-                <Button title="検索" 
-                        onPress={onPressFetch} 
-                        style={{marginBottom: 10}}
-                        
-                />
-            </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', width: 320 }}>
+                    <Input onChangeText={onChangeWord} 
+                        value={word} 
+                        placeholder='请输入单词'
+                        leftIcon={{
+                                type: 'font-awesome', 
+                                name: 'search', 
+                                color: 'lightgray', 
+                                size: 20
+                                }} 
+                    />
+                    <Button title="検索" 
+                            onPress={onPressFetch} 
+                            style={{marginBottom: 10}}
+                    />
+                </View>
+            </ThemeProvider>
             <FlatList
                 data={answerList}
                 renderItem={renderItem}
                 keyExtractor={answerList => `${answerList.key}`}
+                style={styles.flatlist}
             />
         </View>
     )
@@ -73,6 +83,11 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1
     },
     flatlist: {
+        borderTopColor: 'lightgray',
+        borderTopWidth: 1,
+        marginBottom: 140
+    },
+    flatlistContent: {
         padding: 10,
         borderBottomColor: 'lightgray',
         borderBottomWidth: 1
