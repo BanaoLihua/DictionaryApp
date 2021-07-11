@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, TextInput, StyleSheet, FlatList, StatusBar } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, StyleSheet, FlatList, Keyboard } from 'react-native';
 import { Input, Button, Header, ThemeProvider } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export const ChineseScreen = () => {
 
@@ -12,6 +12,8 @@ export const ChineseScreen = () => {
     }
 
     const [answerList, setAnswerList] = useState([]);
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const [word, onChangeWord] = useState('');
 
@@ -24,7 +26,12 @@ export const ChineseScreen = () => {
     }
 
     const onPressFetch = () => {
-        (async() => {setAnswerList(await fetchAnswer())})();
+        Keyboard.dismiss()
+        setIsLoading(true);
+        (async() => {
+            setAnswerList(await fetchAnswer());
+            setIsLoading(false)
+        })();
     }
 
     const renderItem = ({item}) => {
@@ -58,6 +65,11 @@ export const ChineseScreen = () => {
                     />
                 </View>
             </ThemeProvider>
+            {isLoading && <Spinner
+                visible
+                textContent="検索中"
+                textStyle={{ color: 'white' }}
+            />}
             <FlatList
                 data={answerList}
                 renderItem={renderItem}
