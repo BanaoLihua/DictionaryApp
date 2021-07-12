@@ -11,6 +11,8 @@ export const EnglishScreen = () => {
 
     const [word, onChangeWord] = useState('');
 
+    const [wordTitle, setWordTitle] =useState('');
+
     const url = 'https://script.google.com/macros/s/AKfycbzZgYWR32JsBCn8H3UoRE_mHbqemR7ZQli_V1tzTsH_g-fDWb0hNBu5-Cs7h77RmkXG/exec';
 
     const fetchAnswer = async () => {
@@ -20,11 +22,12 @@ export const EnglishScreen = () => {
     }
 
     const onPressFetch = () => {
-        Keyboard.dismiss()
+        Keyboard.dismiss();
         setIsLoading(true);
         (async() => {
             setAnswerList(await fetchAnswer());
-            setIsLoading(false)
+            setIsLoading(false);
+            setWordTitle(word);
         })();
     }
 
@@ -39,7 +42,7 @@ export const EnglishScreen = () => {
     return (
         <View>
             <Header 
-                centerComponent={{text: 'Weblio英語辞書', style: {color: 'white', fontSize: 20}}}
+                centerComponent={{text: 'Weblio英語辞書', style: {color: 'white', fontSize: 20, height: 25}}}
             />
             <View >
                 <View style={{ flexDirection: 'row', alignItems: 'center', width: 320 }}>
@@ -59,6 +62,7 @@ export const EnglishScreen = () => {
                             
                     />
                 </View>
+                <Text style={styles.wordTitle}>{wordTitle}</Text>
             </View>
             {isLoading && <Spinner
                 visible
@@ -89,10 +93,15 @@ const styles = StyleSheet.create({
         borderBottomColor: 'lightblue',
         borderBottomWidth: 1
     },
+    wordTitle: {
+        fontSize: 40,
+        marginLeft: 10,
+        marginBottom: 10
+    },
     flatlist: {
         borderTopColor: 'lightgray',
         borderTopWidth: 1,
-        marginBottom: 140
+        marginBottom: 190
     },
     flatlistContent: {
         padding: 10,

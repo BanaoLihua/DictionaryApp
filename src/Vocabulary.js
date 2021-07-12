@@ -21,7 +21,7 @@ export const VocabularyScreen = () => {
         <View>
             <ThemeProvider theme={theme}>
                 <Header 
-                    centerComponent={{text: '単語帳', style: {color: 'white', fontSize: 20}}}
+                    centerComponent={{text: '単語帳', style: {color: 'white', fontSize: 20, height: 25}}}
                 />
                 <View style={{ flexDirection: 'row', alignItems: 'center', width: 320 }}>
                 </View>

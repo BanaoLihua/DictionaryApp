@@ -17,6 +17,8 @@ export const ChineseScreen = () => {
 
     const [word, onChangeWord] = useState('');
 
+    const [wordTitle, setWordTitle] = useState('');
+
     const url = 'https://script.google.com/macros/s/AKfycbwnnp8TH7hoqGTEUP5QV3Q1EB7yD9HlK0y1EdN1bdCvG62HO-BTddVcGW5jhEzS4ai_/exec';
 
     const fetchAnswer = async () => {
@@ -26,11 +28,12 @@ export const ChineseScreen = () => {
     }
 
     const onPressFetch = () => {
-        Keyboard.dismiss()
+        Keyboard.dismiss();
         setIsLoading(true);
         (async() => {
             setAnswerList(await fetchAnswer());
-            setIsLoading(false)
+            setWordTitle(word);
+            setIsLoading(false);
         })();
     }
 
@@ -46,7 +49,7 @@ export const ChineseScreen = () => {
         <View>
             <ThemeProvider theme={theme}>
                 <Header 
-                    centerComponent={{text: 'Weblio中国語辞書', style: {color: 'white', fontSize: 20}}}
+                    centerComponent={{text: 'Weblio中国語辞書', style: {color: 'white', fontSize: 20, height: 25}}}
                 />
                 <View style={{ flexDirection: 'row', alignItems: 'center', width: 320 }}>
                     <Input onChangeText={onChangeWord} 
@@ -64,6 +67,7 @@ export const ChineseScreen = () => {
                             style={{marginBottom: 10}}
                     />
                 </View>
+                <Text style={styles.wordTitle}>{wordTitle}</Text>
             </ThemeProvider>
             {isLoading && <Spinner
                 visible
@@ -94,10 +98,15 @@ const styles = StyleSheet.create({
         borderBottomColor: 'lightblue',
         borderBottomWidth: 1
     },
+    wordTitle: {
+        fontSize: 40,
+        marginLeft: 10,
+        marginBottom: 10
+    },
     flatlist: {
         borderTopColor: 'lightgray',
         borderTopWidth: 1,
-        marginBottom: 140
+        marginBottom: 190
     },
     flatlistContent: {
         padding: 10,
