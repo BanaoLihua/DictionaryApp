@@ -23,8 +23,6 @@ export const VocabularyScreen = () => {
                 <Header 
                     centerComponent={{text: '単語帳', style: {color: 'white', fontSize: 20, height: 25}}}
                 />
-                <View style={{ flexDirection: 'row', alignItems: 'center', width: 320 }}>
-                </View>
                 <Card>
                     <Card.Title>英語</Card.Title>
                     <Card.Divider/>
