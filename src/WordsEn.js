@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     Animated,
     Dimensions,
@@ -8,7 +8,11 @@ import {
     View,
 } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
-import { Header, ThemeProvider } from 'react-native-elements';
+import { Button, Header, ThemeProvider } from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Storage from 'react-native-storage';
+import { useNavigation } from '@react-navigation/native';
+
 
 const theme = {
     colors: {
@@ -17,27 +21,49 @@ const theme = {
 }
 
 const rowTranslateAnimatedValues = {};
-Array(20)
+Array(100)
     .fill('')
     .forEach((_, i) => {
         rowTranslateAnimatedValues[`${i}`] = new Animated.Value(1);
     });
 
+
+
 export const WordsEn = () => {
+    const navigation = useNavigation();
+     
+    const storage = new Storage({
+        storageBackend: AsyncStorage,
+        defaultExpires: null
+    });
+
+    const [listData, setListData] = useState();
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            storage.load({key: 'item'})
+            .then(res => setListData(res))
+        });
+        return unsubscribe;
+    }, []);
+
+
+    /*
     const [listData, setListData] = useState(
         [{
             key: 0,
             text: 'apple'
         },
         {
-            key: 2,
+            key: 1,
             text: 'banana'
-        },
-        {
+        },{
             key: 3,
-            text: 'anko'
+            text: 'akdsljf'
         }]
     );
+    */
+    
 
     console.log(listData)
 

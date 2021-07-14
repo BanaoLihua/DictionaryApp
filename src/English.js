@@ -3,6 +3,8 @@ import { Text, View, StyleSheet, FlatList, Keyboard } from 'react-native';
 import { Input, Button, Header } from 'react-native-elements';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Storage from 'react-native-storage';
 
 export const EnglishScreen = () => {
 
@@ -15,6 +17,8 @@ export const EnglishScreen = () => {
     const [wordTitle, setWordTitle] = useState('');
 
     const [addIcon, setAddIcon] = useState(false);
+
+    const [wordsData, setWordsData] = useState([]);
 
     const url = 'https://script.google.com/macros/s/AKfycbzZgYWR32JsBCn8H3UoRE_mHbqemR7ZQli_V1tzTsH_g-fDWb0hNBu5-Cs7h77RmkXG/exec';
 
@@ -43,8 +47,24 @@ export const EnglishScreen = () => {
         )
     }
 
+    const storage = new Storage({
+        storageBackend: AsyncStorage,
+        defaultExpires: null
+    });
+
+    // todo: wordsDataが毎回初期化される
+
     const onPressBookmark = () => {
-        console.log('bookmark!')
+        storage.load({key: 'item'})
+        .then(res => setWordsData(res))
+
+        const keyName = new Date().toString();
+        wordsData.push({key: wordsData.length, text: word})
+        storage.save({
+            key: 'item',
+            data: wordsData
+        });
+        console.log(wordsData);
     }
 
     return (
