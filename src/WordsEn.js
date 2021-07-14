@@ -8,7 +8,7 @@ import {
     View,
 } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
-import { Header, ThemeProvider } from 'react-native-elements'
+import { Header, ThemeProvider } from 'react-native-elements';
 
 const theme = {
     colors: {
@@ -79,12 +79,12 @@ export const WordsEn = () => {
             ]}
         >
             <TouchableHighlight
-                onPress={() => console.log('You touched me')}
+                onPress={() => console.log({data})}
                 style={styles.rowFront}
                 underlayColor={'#AAA'}
             >
                 <View>
-                    <Text>I am {data.item.text} in a SwipeListView</Text>
+                    <Text>{data.item.text}</Text>
                 </View>
             </TouchableHighlight>
         </Animated.View>
@@ -112,6 +112,8 @@ export const WordsEn = () => {
                     rightOpenValue={-Dimensions.get('window').width}
                     onSwipeValueChange={onSwipeValueChange}
                     useNativeDriver={false}
+                    keyExtractor={( item ) => `${item.key}`}
+                    
                 />
             </ThemeProvider>
         </View>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, StyleSheet, FlatList, Keyboard } from 'react-native';
 import { Input, Button, Header } from 'react-native-elements';
 import Spinner from 'react-native-loading-spinner-overlay';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const EnglishScreen = () => {
 
@@ -11,7 +12,9 @@ export const EnglishScreen = () => {
 
     const [word, onChangeWord] = useState('');
 
-    const [wordTitle, setWordTitle] =useState('');
+    const [wordTitle, setWordTitle] = useState('');
+
+    const [addIcon, setAddIcon] = useState(false);
 
     const url = 'https://script.google.com/macros/s/AKfycbzZgYWR32JsBCn8H3UoRE_mHbqemR7ZQli_V1tzTsH_g-fDWb0hNBu5-Cs7h77RmkXG/exec';
 
@@ -28,6 +31,7 @@ export const EnglishScreen = () => {
             setAnswerList(await fetchAnswer());
             setIsLoading(false);
             setWordTitle(word);
+            setAddIcon(true);
         })();
     }
 
@@ -37,6 +41,10 @@ export const EnglishScreen = () => {
                 <Text>{item.word}</Text>
             </View>
         )
+    }
+
+    const onPressBookmark = () => {
+        console.log('bookmark!')
     }
 
     return (
@@ -62,7 +70,10 @@ export const EnglishScreen = () => {
                             
                     />
                 </View>
-                <Text style={styles.wordTitle}>{wordTitle}</Text>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.wordTitle}>{wordTitle}</Text>
+                    {addIcon && <Icon name='bookmark-o' color="limegreen" size={45} onPress={onPressBookmark} />}
+                </View>
             </View>
             {isLoading && <Spinner
                 visible
