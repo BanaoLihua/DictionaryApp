@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, FlatList, Keyboard } from 'react-native';
 import { Input, Button, Header } from 'react-native-elements';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import Storage from 'react-native-storage';
 
 export const EnglishScreen = () => {
@@ -47,18 +48,23 @@ export const EnglishScreen = () => {
         )
     }
 
+    const navigation = useNavigation();
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            storage.load({key: 'item'})
+            .then(res => setWordsData(res))
+        })
+        return unsubscribe;
+    }, [])
+
     const storage = new Storage({
         storageBackend: AsyncStorage,
-        defaultExpires: null
+        defaultExpires: null,
+        enableCache: true
     });
 
-    // todo: wordsDataが毎回初期化される
-
-    const onPressBookmark = () => {
-        storage.load({key: 'item'})
-        .then(res => setWordsData(res))
-
-        const keyName = new Date().toString();
+    const onPressBookmark = async () => {
         wordsData.push({key: wordsData.length, text: word})
         storage.save({
             key: 'item',

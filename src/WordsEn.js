@@ -21,20 +21,22 @@ const theme = {
 }
 
 const rowTranslateAnimatedValues = {};
-Array(100)
+
+//単語の表示制限
+const max = 100
+Array(max)
     .fill('')
     .forEach((_, i) => {
         rowTranslateAnimatedValues[`${i}`] = new Animated.Value(1);
     });
-
-
 
 export const WordsEn = () => {
     const navigation = useNavigation();
      
     const storage = new Storage({
         storageBackend: AsyncStorage,
-        defaultExpires: null
+        defaultExpires: null,
+        enableCache: true
     });
 
     const [listData, setListData] = useState();
@@ -45,25 +47,7 @@ export const WordsEn = () => {
             .then(res => setListData(res))
         });
         return unsubscribe;
-    }, []);
-
-
-    /*
-    const [listData, setListData] = useState(
-        [{
-            key: 0,
-            text: 'apple'
-        },
-        {
-            key: 1,
-            text: 'banana'
-        },{
-            key: 3,
-            text: 'akdsljf'
-        }]
-    );
-    */
-    
+    }, []);    
 
     console.log(listData)
 
