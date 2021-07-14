@@ -6,9 +6,10 @@ import { EnglishScreen } from './src/English';
 import { ChineseScreen } from './src/Chinese';
 import { VocabularyScreen } from './src/Vocabulary';
 import { createStackNavigator } from '@react-navigation/stack';
-import { WordsCn } from './src/WordsCn';
 import { WordsEn } from './src/WordsEn';
 import { WordsEnDetail } from './src/WordsEnDetail';
+import { WordsCn } from './src/WordsCn';
+import { WordsCnDetail } from './src/WordsCnDetail';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
             <Stack.Screen name="wordsEn" component={WordsEn} />
             <Stack.Screen name="wordsEnDetail" component={WordsEnDetail} />
             <Stack.Screen name="wordsCn" component={WordsCn} />
+            <Stack.Screen name="wordsCnDetail" component={WordsCnDetail} />
         </Stack.Navigator>
     )
 }

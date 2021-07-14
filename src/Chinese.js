@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, FlatList, Keyboard } from 'react-native';
-import { Input, Button, Header, ThemeProvider } from 'react-native-elements';
+import React, { useState, useEffect } from 'react';
+import { Text, View, StyleSheet, FlatList, Keyboard, Alert } from 'react-native';
+import { Input, Button, Header,ThemeProvider } from 'react-native-elements';
 import Spinner from 'react-native-loading-spinner-overlay';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import Storage from 'react-native-storage';
 
 export const ChineseScreen = () => {
 
@@ -17,7 +21,11 @@ export const ChineseScreen = () => {
 
     const [word, onChangeWord] = useState('');
 
+    const [addIcon, setAddIcon] = useState(false);
+
     const [wordTitle, setWordTitle] = useState('');
+
+    const [wordsData, setWordsData] = useState([]);
 
     const url = 'https://script.google.com/macros/s/AKfycbwnnp8TH7hoqGTEUP5QV3Q1EB7yD9HlK0y1EdN1bdCvG62HO-BTddVcGW5jhEzS4ai_/exec';
 
@@ -34,6 +42,7 @@ export const ChineseScreen = () => {
             setAnswerList(await fetchAnswer());
             setWordTitle(word);
             setIsLoading(false);
+            setAddIcon(true);
         })();
     }
 
@@ -43,6 +52,31 @@ export const ChineseScreen = () => {
                 <Text>{item.word}</Text>
             </View>
         )
+    }
+
+    const navigation = useNavigation();
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            storage.load({key: 'chinese'})
+            .then(res => setWordsData(res))
+        })
+        return unsubscribe;
+    }, [])
+
+    const storage = new Storage({
+        storageBackend: AsyncStorage,
+        defaultExpires: null,
+        enableCache: true
+    });
+
+    const onPressBookmark = async () => {
+        wordsData.push({key: wordsData.length, text: word})
+        storage.save({
+            key: 'chinese',
+            data: wordsData
+        });
+        Alert.alert('単語帳に追加しました！')
     }
 
     return (
@@ -67,7 +101,12 @@ export const ChineseScreen = () => {
                             style={{marginBottom: 10}}
                     />
                 </View>
-                <Text style={styles.wordTitle}>{wordTitle}</Text>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.wordTitle}>{wordTitle}</Text>
+                    {addIcon && 
+                    <Icon name='bookmark-o' color="limegreen" size={45} onPress={onPressBookmark}/>
+                    }
+                </View>
             </ThemeProvider>
             {isLoading && <Spinner
                 visible

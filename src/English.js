@@ -52,7 +52,7 @@ export const EnglishScreen = () => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            storage.load({key: 'item'})
+            storage.load({key: 'english'})
             .then(res => setWordsData(res))
         })
         return unsubscribe;
@@ -67,7 +67,7 @@ export const EnglishScreen = () => {
     const onPressBookmark = async () => {
         wordsData.push({key: wordsData.length, text: word})
         storage.save({
-            key: 'item',
+            key: 'english',
             data: wordsData
         });
         Alert.alert('単語帳に追加しました！')

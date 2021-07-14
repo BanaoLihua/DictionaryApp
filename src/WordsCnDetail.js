@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, FlatList, Keyboard, Alert } from 'react-native';
+import { Text, View, StyleSheet, FlatList } from 'react-native';
 import { Header, ThemeProvider } from 'react-native-elements';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
 
-export const WordsEnDetail = ({route}) => {
+export const WordsCnDetail = ({route}) => {
 
     const navigation = useNavigation();
 
@@ -22,7 +22,7 @@ export const WordsEnDetail = ({route}) => {
 
     const [wordTitle, setWordTitle] = useState('');
 
-    const url = 'https://script.google.com/macros/s/AKfycbzZgYWR32JsBCn8H3UoRE_mHbqemR7ZQli_V1tzTsH_g-fDWb0hNBu5-Cs7h77RmkXG/exec';
+    const url = 'https://script.google.com/macros/s/AKfycbwnnp8TH7hoqGTEUP5QV3Q1EB7yD9HlK0y1EdN1bdCvG62HO-BTddVcGW5jhEzS4ai_/exec';
 
     const fetchAnswer = async () => {
         const submitUrl = url + '?word=' + word;
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     flatlist: {
         borderTopColor: 'lightgray',
         borderTopWidth: 1,
-        marginBottom: 130
+        marginBottom: 120
     },
     flatlistContent: {
         padding: 10,

@@ -8,12 +8,10 @@ import {
     View,
 } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
-import { Button, Header, ThemeProvider } from 'react-native-elements';
+import { Header, ThemeProvider } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Storage from 'react-native-storage';
 import { useNavigation } from '@react-navigation/native';
-import { WordsEnDetail } from './WordsEnDetail';
-
 
 const theme = {
     colors: {
@@ -44,7 +42,7 @@ export const WordsEn = () => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            storage.load({key: 'item'})
+            storage.load({key: 'english'})
             .then(res => setListData(res))
         });
         return unsubscribe;
