@@ -95,7 +95,6 @@ export const EnglishScreen = () => {
                             style={{marginBottom: 10}}
                     />
                 </View>
-                {/* todo: ブックマークボタンがダサい */}
                 <View style={{flexDirection: 'row'}}>
                     <Text style={styles.wordTitle}>{wordTitle}</Text>
                     {addIcon && 
@@ -136,7 +135,8 @@ const styles = StyleSheet.create({
     wordTitle: {
         fontSize: 40,
         marginLeft: 10,
-        marginBottom: 10
+        marginBottom: 10,
+        width: 320,
     },
     flatlist: {
         borderTopColor: 'lightgray',

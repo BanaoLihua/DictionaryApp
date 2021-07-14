@@ -140,7 +140,8 @@ const styles = StyleSheet.create({
     wordTitle: {
         fontSize: 40,
         marginLeft: 10,
-        marginBottom: 10
+        marginBottom: 10,
+        width: 320
     },
     flatlist: {
         borderTopColor: 'lightgray',

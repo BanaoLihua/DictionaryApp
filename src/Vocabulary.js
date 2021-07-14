@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, FlatList, Keyboard } from 'react-native';
-import { Input, Button, Header, ThemeProvider, Card } from 'react-native-elements';
-import Spinner from 'react-native-loading-spinner-overlay';
-import { createStackNavigator } from '@react-navigation/stack';
-import { WordsEn } from './WordsEn';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Header, ThemeProvider, Card } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/core';
-import { NavigationContainer } from '@react-navigation/native';
 
 export const VocabularyScreen = () => {
 
