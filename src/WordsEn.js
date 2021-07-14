@@ -12,6 +12,7 @@ import { Button, Header, ThemeProvider } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Storage from 'react-native-storage';
 import { useNavigation } from '@react-navigation/native';
+import { WordsEnDetail } from './WordsEnDetail';
 
 
 const theme = {
@@ -23,7 +24,7 @@ const theme = {
 const rowTranslateAnimatedValues = {};
 
 //単語の表示制限
-const max = 100
+const max = 20;
 Array(max)
     .fill('')
     .forEach((_, i) => {
@@ -48,8 +49,6 @@ export const WordsEn = () => {
         });
         return unsubscribe;
     }, []);    
-
-    console.log(listData)
 
     const animationIsRunning = useRef(false);
 
@@ -89,12 +88,14 @@ export const WordsEn = () => {
             ]}
         >
             <TouchableHighlight
-                onPress={() => console.log({data})}
+                onPress={() => {
+                    navigation.navigate('wordsEnDetail', data.item.text)
+                }}
                 style={styles.rowFront}
                 underlayColor={'#AAA'}
             >
                 <View>
-                    <Text>{data.item.text}</Text>
+                    <Text style={styles.frontText}>{data.item.text}</Text>
                 </View>
             </TouchableHighlight>
         </Animated.View>
@@ -123,7 +124,6 @@ export const WordsEn = () => {
                     onSwipeValueChange={onSwipeValueChange}
                     useNativeDriver={false}
                     keyExtractor={( item ) => `${item.key}`}
-                    
                 />
             </ThemeProvider>
         </View>
@@ -134,6 +134,9 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         flex: 1,
+    },
+    frontText: {
+        fontSize: 30,
     },
     backTextWhite: {
         color: '#FFF',

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, FlatList, Keyboard } from 'react-native';
+import { Text, View, StyleSheet, FlatList, Keyboard, Alert } from 'react-native';
 import { Input, Button, Header } from 'react-native-elements';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -70,7 +70,7 @@ export const EnglishScreen = () => {
             key: 'item',
             data: wordsData
         });
-        console.log(wordsData);
+        Alert.alert('単語帳に追加しました！')
     }
 
     return (
@@ -93,13 +93,16 @@ export const EnglishScreen = () => {
                     <Button title="検索" 
                             onPress={onPressFetch} 
                             style={{marginBottom: 10}}
-                            
                     />
                 </View>
+                {/* todo: ブックマークボタンがダサい */}
                 <View style={{flexDirection: 'row'}}>
                     <Text style={styles.wordTitle}>{wordTitle}</Text>
-                    {addIcon && <Icon name='bookmark-o' color="limegreen" size={45} onPress={onPressBookmark} />}
+                    {addIcon && 
+                    <Icon name='bookmark-o' color="limegreen" size={45} onPress={onPressBookmark}/>
+                    }
                 </View>
+
             </View>
             {isLoading && <Spinner
                 visible
