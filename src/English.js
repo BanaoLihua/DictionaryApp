@@ -65,7 +65,7 @@ export const EnglishScreen = () => {
     });
 
     const onPressBookmark = async () => {
-        wordsData.push({key: wordsData.length, text: word})
+        wordsData.push({key: wordsData.length.toString(), text: word})
         storage.save({
             key: 'english',
             data: wordsData

@@ -23,7 +23,7 @@ const theme = {
 const rowTranslateAnimatedValues = {};
 
 //単語の表示制限
-const max = 20;
+const max = 1000;
 Array(max)
     .fill('')
     .forEach((_, i) => {
@@ -103,7 +103,7 @@ export const WordsCn = () => {
     const renderHiddenItem = () => (
         <View style={styles.rowBack}>
             <View style={[styles.backRightBtn, styles.backRightBtnRight]}>
-                <Text style={styles.backTextWhite}>Delete</Text>
+                <Text style={styles.backTextWhite}>削除</Text>
             </View>
         </View>
     );

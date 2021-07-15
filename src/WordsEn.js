@@ -19,23 +19,12 @@ const theme = {
     }
 }
 
-const rowTranslateAnimatedValues = {};
-
-//単語の表示制限
-const max = 20;
-Array(max)
-    .fill('')
-    .forEach((_, i) => {
-        rowTranslateAnimatedValues[`${i}`] = new Animated.Value(1);
-    });
-
 export const WordsEn = () => {
     const navigation = useNavigation();
      
     const storage = new Storage({
         storageBackend: AsyncStorage,
         defaultExpires: null,
-        enableCache: true
     });
 
     const [listData, setListData] = useState();
@@ -46,9 +35,21 @@ export const WordsEn = () => {
             .then(res => setListData(res))
         });
         return unsubscribe;
-    }, []);    
+    }, []);
+
+    const rowTranslateAnimatedValues = {};
+
+    //単語の表示制限
+    const max = 1000;
+    Array(max)
+        .fill('')
+        .forEach((_, i) => {
+            rowTranslateAnimatedValues[`${i}`] = new Animated.Value(1);
+        });
 
     const animationIsRunning = useRef(false);
+
+    // Todo: リストの削除時にkeyがずれる為、消した要素以降の値のkeyを減らす必要がある。なお、keyは数字だがstring型
 
     const onSwipeValueChange = swipeData => {
         const { key, value } = swipeData;
@@ -61,12 +62,18 @@ export const WordsEn = () => {
                 toValue: 0,
                 duration: 200,
                 useNativeDriver: false,
-            }).start(() => {
+            }).start(async() => {
                 const newData = [...listData];
                 const prevIndex = listData.findIndex(item => item.key === key);
                 newData.splice(prevIndex, 1);
                 setListData(newData);
                 animationIsRunning.current = false;
+                
+                console.log(newData)
+                await storage.save({
+                    key: "english",
+                    data: newData
+                })
             });
         }
     };
@@ -102,7 +109,7 @@ export const WordsEn = () => {
     const renderHiddenItem = () => (
         <View style={styles.rowBack}>
             <View style={[styles.backRightBtn, styles.backRightBtnRight]}>
-                <Text style={styles.backTextWhite}>Delete</Text>
+                <Text style={styles.backTextWhite}>削除</Text>
             </View>
         </View>
     );
