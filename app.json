@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "dictionary-app",
+    "name": "Weblio英中辞書",
     "slug": "dictionary-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,7 +8,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ee7e2d"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,6 +17,9 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.github.BanaoLihua.DictionaryApp",
+      "buildNumber": "100",
+      "icon": "./assets/icon.png",
       "supportsTablet": true
     },
     "android": {
