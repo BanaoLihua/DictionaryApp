@@ -3,11 +3,7 @@
 You can look up English and Chinese words on this app. The dictionary is based on Weblio and have a bookmark function.
  
 # DEMO
-
-![EN-JP](https://github.com/BanaoLihua/DictionaryApp/blob/main/demo/EN.PNG)
-
-![CN-JP](https://github.com/BanaoLihua/DictionaryApp/blob/main/demo/CN.PNG)
-
+<img src="https://github.com/BanaoLihua/DictionaryApp/blob/main/demo/EN.PNG" width=400> <img src="https://github.com/BanaoLihua/DictionaryApp/blob/main/demo/CN.PNG" width=400>
 ![Bookmark](https://github.com/BanaoLihua/DictionaryApp/blob/main/demo/bookmark.gif)
  
 # Requirement
