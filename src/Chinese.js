@@ -17,6 +17,8 @@ export const ChineseScreen = () => {
 
     const [answerList, setAnswerList] = useState([]);
 
+    const [pinyinTitle, setPinyinTitle] = useState('');
+
     const [isLoading, setIsLoading] = useState(false);
 
     const [word, onChangeWord] = useState('');
@@ -27,19 +29,28 @@ export const ChineseScreen = () => {
 
     const [wordsData, setWordsData] = useState([]);
 
-    const url = 'https://script.google.com/macros/s/AKfycbwnnp8TH7hoqGTEUP5QV3Q1EB7yD9HlK0y1EdN1bdCvG62HO-BTddVcGW5jhEzS4ai_/exec';
+    const url_words = 'https://script.google.com/macros/s/AKfycbwnnp8TH7hoqGTEUP5QV3Q1EB7yD9HlK0y1EdN1bdCvG62HO-BTddVcGW5jhEzS4ai_/exec';
 
-    const fetchAnswer = async () => {
+    const url_pinyin = 'https://script.google.com/macros/s/AKfycbywRXyuM_3khMUMK3vSB2rnaAuHF5br6AWSdd0pgvv0pwzG-OL23IT3Sf3nc3WnKw/exec'
+
+    const fetchAnswer = async (url) => {
         const submitUrl = url + '?word=' + word;
         return fetch(submitUrl)
         .then(res => res.json());
+    }
+
+    const fetchPinyin = async (url) => {
+        const submitUrl = url + '?word=' + word;
+        return fetch(submitUrl)
+        .then(res => res.text());
     }
 
     const onPressFetch = () => {
         Keyboard.dismiss();
         setIsLoading(true);
         (async() => {
-            setAnswerList(await fetchAnswer());
+            setAnswerList(await fetchAnswer(url_words));
+            setPinyinTitle(await fetchPinyin(url_pinyin));
             setWordTitle(word);
             setIsLoading(false);
             setAddIcon(true);
@@ -102,7 +113,10 @@ export const ChineseScreen = () => {
                     />
                 </View>
                 <View style={{flexDirection: 'row'}}>
-                    <Text style={styles.wordTitle}>{wordTitle}</Text>
+                    <View style={styles.title}>
+                        <Text style={styles.wordTitle}>{wordTitle} </Text>
+                        <Text style={styles.pinyinTitle}>{pinyinTitle}</Text>
+                    </View>
                     {addIcon && 
                     <Icon name='bookmark-o' color="limegreen" size={45} onPress={onPressBookmark}/>
                     }
@@ -137,11 +151,18 @@ const styles = StyleSheet.create({
         borderBottomColor: 'lightblue',
         borderBottomWidth: 1
     },
-    wordTitle: {
-        fontSize: 40,
+    title: {
+        flexDirection: 'row',
         marginLeft: 10,
         marginBottom: 10,
-        width: 320
+        width: 320,
+        alignItems: 'baseline'
+    },
+    wordTitle: {
+        fontSize: 40,
+    },
+    pinyinTitle: {
+        fontSize: 25,
     },
     flatlist: {
         borderTopColor: 'lightgray',
