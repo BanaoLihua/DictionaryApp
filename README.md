@@ -19,7 +19,7 @@ You can install by using testflight. I send testflight code after you cantact to
 
 Android user:
 
-Download apk file from [here]()
+Download apk file from [here](https://www.dropbox.com/s/v10y933vqk7qgmn/dictionary-app-50d966b983794e819f196a1e8fa52908-signed.apk?dl=0)
 
 
 # Contact
